@@ -1,0 +1,24 @@
+{# Jendela konfirmasi hapus. Satu jendela dipakai bersama oleh semua tombol Hapus;
+   isinya diisi oleh static/js/main.js sesuai tombol yang diklik. #}
+<div class="modal fade" id="modalHapus" tabindex="-1" aria-labelledby="judulModalHapus" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form method="post" action="">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="judulModalHapus">Hapus laporan?</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-2">Anda akan menghapus laporan berikut secara permanen:</p>
+          <p class="mb-2"><strong data-isi="nomor"></strong><br><span data-isi="judul"></span></p>
+          <p class="text-danger small mb-0">Tindakan ini tidak dapat dibatalkan.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-danger"><i class="bi bi-trash me-1"></i>Ya, hapus</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

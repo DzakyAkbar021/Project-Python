@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Beranda{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container py-5">
+    <div class="row align-items-center py-lg-4">
+      <div class="col-lg-7">
+        <span class="badge rounded-pill hero-badge mb-3"><i class="bi bi-shield-check me-1"></i>Laporan aman &amp; hanya dilihat admin</span>
+        <h1 class="display-5 fw-bold mb-3">Suara Anda membuat sekolah lebih baik.</h1>
+        <p class="lead mb-4">
+          AduSekolah adalah tempat bagi siswa dan warga sekolah untuk menyampaikan pengaduan
+          dan saran tentang fasilitas, kebersihan, pelayanan, maupun pembelajaran di
+          {{ nama_sekolah }}.
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <a href="{{ url_for('public.form_laporan') }}" class="btn btn-light btn-lg fw-semibold">
+            <i class="bi bi-pencil-square me-2"></i>Buat Laporan
+          </a>
+          <a href="#cara-kerja" class="btn btn-outline-light btn-lg">Cara Kerja</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container py-5" id="cara-kerja">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold">Bagaimana cara kerjanya?</h2>
+    <p class="text-muted mb-0">Hanya tiga langkah sederhana.</p>
+  </div>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card card-adu h-100 text-center p-3">
+        <div class="card-body">
+          <div class="ikon-bulat mb-3"><i class="bi bi-pencil-square"></i></div>
+          <h3 class="h5 fw-semibold">1. Tulis laporan</h3>
+          <p class="text-muted mb-0">Isi nama, pilih kategori, lalu jelaskan pengaduan atau saran Anda dengan jelas.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-adu h-100 text-center p-3">
+        <div class="card-body">
+          <div class="ikon-bulat mb-3"><i class="bi bi-hash"></i></div>
+          <h3 class="h5 fw-semibold">2. Catat nomor laporan</h3>
+          <p class="text-muted mb-0">Setelah terkirim, Anda mendapat nomor laporan untuk mengenali laporan Anda.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-adu h-100 text-center p-3">
+        <div class="card-body">
+          <div class="ikon-bulat mb-3"><i class="bi bi-check2-circle"></i></div>
+          <h3 class="h5 fw-semibold">3. Ditindaklanjuti</h3>
+          <p class="text-muted mb-0">Admin sekolah membaca laporan Anda dan memprosesnya hingga selesai.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bagian-abu py-5">
+  <div class="container">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-6">
+        <h2 class="fw-bold mb-3">Kategori laporan</h2>
+        <p class="text-muted">Pilih kategori yang paling sesuai agar laporan Anda sampai ke pihak yang tepat.</p>
+        <div class="d-flex flex-wrap gap-2">
+          {% for k in daftar_kategori %}
+            <span class="badge text-bg-light border fs-6 fw-medium px-3 py-2">{{ k }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card card-adu">
+          <div class="card-body p-4">
+            <h3 class="h5 fw-semibold"><i class="bi bi-lock-fill text-primary me-2"></i>Privasi Anda terjaga</h3>
+            <p class="text-muted mb-0">
+              Isi laporan tidak ditampilkan kepada publik. Hanya admin sekolah yang dapat
+              membaca dan menindaklanjutinya. Sampaikan dengan sopan dan jangan
+              mencantumkan data pribadi yang tidak perlu (seperti nomor telepon atau alamat rumah).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container py-5 text-center">
+  <h2 class="fw-bold mb-3">Punya masukan untuk sekolah?</h2>
+  <a href="{{ url_for('public.form_laporan') }}" class="btn btn-primary btn-lg px-4">
+    <i class="bi bi-send me-2"></i>Kirim Pengaduan atau Saran
+  </a>
+</section>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% from "_macros.html" import badge_status %}
+{% block title %}Detail {{ laporan.nomor_laporan }}{% endblock %}
+
+{% block content %}
+<section class="container py-4 py-md-5">
+  <a href="{{ url_for('admin.daftar_laporan') }}" class="text-decoration-none small">
+    <i class="bi bi-arrow-left me-1"></i>Kembali ke daftar laporan
+  </a>
+
+  <div class="row g-4 mt-1">
+    {# Isi laporan #}
+    <div class="col-lg-8">
+      <div class="card card-adu">
+        <div class="card-body p-4">
+          <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+            <span class="fw-semibold text-primary">{{ laporan.nomor_laporan }}</span>
+            {{ badge_status(laporan.status) }}
+          </div>
+          <h1 class="h3 fw-bold mb-3">{{ laporan.judul }}</h1>
+
+          <dl class="row small mb-4">
+            <dt class="col-sm-3 text-muted fw-medium">Pelapor</dt>
+            <dd class="col-sm-9">{{ laporan.nama_pelapor }}</dd>
+            <dt class="col-sm-3 text-muted fw-medium">Jenis</dt>
+            <dd class="col-sm-9">{{ laporan.jenis }}</dd>
+            <dt class="col-sm-3 text-muted fw-medium">Kategori</dt>
+            <dd class="col-sm-9">{{ laporan.kategori }}</dd>
+            <dt class="col-sm-3 text-muted fw-medium">Dikirim</dt>
+            <dd class="col-sm-9">{{ laporan.dibuat_pada|tanggal }}</dd>
+          </dl>
+
+          <h2 class="h6 fw-semibold text-muted text-uppercase">Deskripsi</h2>
+          {# pre-wrap: baris baru dari pelapor tetap terlihat. Isi di-escape otomatis oleh Jinja2. #}
+          <div class="isi-deskripsi">{{ laporan.deskripsi }}</div>
+        </div>
+      </div>
+    </div>
+
+    {# Panel tindakan admin #}
+    <div class="col-lg-4">
+      <div class="card card-adu mb-3">
+        <div class="card-body p-4">
+          <h2 class="h6 fw-semibold mb-3">Ubah status</h2>
+          <form method="post" action="{{ url_for('admin.ubah_status', laporan_id=laporan.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label for="status" class="visually-hidden">Status</label>
+            <select class="form-select mb-3" id="status" name="status">
+              {% for s in daftar_status %}
+                <option value="{{ s }}" {% if laporan.status == s %}selected{% endif %}>{{ s }}</option>
+              {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="bi bi-save me-1"></i>Simpan status
+            </button>
+          </form>
+          <hr>
+          <div class="small text-muted">
+            <div>Terakhir diperbarui:</div>
+            <div class="text-body">{{ laporan.diperbarui_pada|tanggal if laporan.diperbarui_pada else 'Belum pernah diubah' }}</div>
+            {% if laporan.diperbarui_oleh_nama %}
+              <div class="mt-1">Oleh: <span class="text-body">{{ laporan.diperbarui_oleh_nama }}</span></div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-adu border-danger-subtle">
+        <div class="card-body p-4">
+          <h2 class="h6 fw-semibold text-danger mb-2">Zona berbahaya</h2>
+          <p class="small text-muted">Laporan yang dihapus tidak dapat dikembalikan.</p>
+          <button type="button" class="btn btn-outline-danger w-100"
+                  data-bs-toggle="modal" data-bs-target="#modalHapus"
+                  data-action="{{ url_for('admin.hapus_laporan', laporan_id=laporan.id) }}"
+                  data-nomor="{{ laporan.nomor_laporan }}" data-judul="{{ laporan.judul }}">
+            <i class="bi bi-trash me-1"></i>Hapus laporan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "admin/_modal_hapus.html" %}
+{% endblock %}

@@ -1,0 +1,8 @@
+{# Potongan tampilan yang dipakai berulang. Cara pakai:
+   {% from "_macros.html" import badge_status %}
+   {{ badge_status(laporan.status) }} #}
+
+{% macro badge_status(status) -%}
+  {%- set kelas = {'Menunggu': 'badge-menunggu', 'Diproses': 'badge-diproses', 'Selesai': 'badge-selesai'} -%}
+  <span class="badge badge-status {{ kelas.get(status, 'text-bg-secondary') }}">{{ status }}</span>
+{%- endmacro %}

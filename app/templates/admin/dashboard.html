@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Dashboard Admin{% endblock %}
+
+{% block content %}
+<section class="container py-4 py-md-5">
+  <div class="mb-4">
+    <h1 class="h2 fw-bold mb-1">Dashboard</h1>
+    <p class="text-muted mb-0">Ringkasan laporan pengaduan dan saran yang masuk.</p>
+  </div>
+
+  {% set kartu = [
+    ('Total Laporan', stat.total, 'bi-inbox-fill', 'biru', url_for('admin.daftar_laporan')),
+    ('Menunggu', stat.menunggu, 'bi-hourglass-split', 'kuning', url_for('admin.daftar_laporan', status='Menunggu')),
+    ('Diproses', stat.diproses, 'bi-gear-fill', 'langit', url_for('admin.daftar_laporan', status='Diproses')),
+    ('Selesai', stat.selesai, 'bi-check-circle-fill', 'hijau', url_for('admin.daftar_laporan', status='Selesai')),
+  ] %}
+  <div class="row g-3 mb-4">
+    {% for judul, angka, ikon, warna, tautan in kartu %}
+    <div class="col-6 col-lg-3">
+      <a href="{{ tautan }}" class="card card-adu stat-card stat-{{ warna }} h-100 text-decoration-none">
+        <div class="card-body d-flex align-items-center gap-3">
+          <div class="stat-ikon"><i class="bi {{ ikon }}"></i></div>
+          <div>
+            <div class="stat-angka">{{ angka }}</div>
+            <div class="stat-label">{{ judul }}</div>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="card card-adu">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+      <h2 class="h5 fw-semibold mb-0">Laporan terbaru</h2>
+      <a href="{{ url_for('admin.daftar_laporan') }}" class="btn btn-sm btn-outline-primary">Lihat semua</a>
+    </div>
+    <div class="card-body p-0">
+      {% include "admin/_tabel_laporan.html" %}
+    </div>
+  </div>
+</section>
+
+{% include "admin/_modal_hapus.html" %}
+{% endblock %}

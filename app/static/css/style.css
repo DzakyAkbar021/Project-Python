@@ -1,0 +1,192 @@
+/* Gaya tambahan AduSekolah (di atas Bootstrap 5).
+   Warna utama: biru, putih, abu-abu. */
+
+:root {
+  --adu-biru-900: #0f2a5e;
+  --adu-biru-800: #1e3a8a;
+  --adu-biru-700: #1d4ed8;
+  --adu-biru-600: #2563eb;
+  --adu-biru-100: #dbeafe;
+  --adu-biru-50: #eff6ff;
+  --adu-abu-50: #f8fafc;
+  --adu-abu-100: #f1f5f9;
+  --adu-abu-200: #e2e8f0;
+  --adu-abu-500: #64748b;
+  --adu-abu-800: #1e293b;
+
+  --bs-body-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --bs-body-bg: var(--adu-abu-50);
+  --bs-body-color: var(--adu-abu-800);
+  --bs-primary: var(--adu-biru-600);
+  --bs-primary-rgb: 37, 99, 235;
+  --bs-link-color: var(--adu-biru-700);
+  --bs-link-hover-color: var(--adu-biru-900);
+  --bs-link-color-rgb: 29, 78, 216;
+  --bs-border-radius: 0.6rem;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tombol utama berwarna biru */
+.btn-primary {
+  --bs-btn-bg: var(--adu-biru-600);
+  --bs-btn-border-color: var(--adu-biru-600);
+  --bs-btn-hover-bg: var(--adu-biru-700);
+  --bs-btn-hover-border-color: var(--adu-biru-700);
+  --bs-btn-active-bg: var(--adu-biru-800);
+  --bs-btn-active-border-color: var(--adu-biru-800);
+  --bs-btn-disabled-bg: var(--adu-biru-600);
+  --bs-btn-disabled-border-color: var(--adu-biru-600);
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--adu-biru-600);
+  --bs-btn-border-color: var(--adu-biru-600);
+  --bs-btn-hover-bg: var(--adu-biru-600);
+  --bs-btn-hover-border-color: var(--adu-biru-600);
+  --bs-btn-active-bg: var(--adu-biru-700);
+  --bs-btn-active-border-color: var(--adu-biru-700);
+}
+.form-control:focus,
+.form-select:focus,
+.btn-check:focus + .btn {
+  border-color: var(--adu-biru-600);
+  box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.18);
+}
+.btn-check:checked + .btn-outline-primary {
+  background-color: var(--adu-biru-600);
+  border-color: var(--adu-biru-600);
+  color: #fff;
+}
+
+/* Navbar */
+.navbar-adu {
+  background: linear-gradient(90deg, var(--adu-biru-900), var(--adu-biru-800));
+  box-shadow: 0 2px 10px rgba(15, 42, 94, 0.25);
+}
+.navbar-adu .nav-link.active {
+  color: #fff;
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* Footer */
+.footer-adu {
+  background: #fff;
+  border-top: 1px solid var(--adu-abu-200);
+  color: var(--adu-abu-500);
+}
+
+/* Beranda */
+.hero {
+  background: linear-gradient(135deg, var(--adu-biru-800) 0%, var(--adu-biru-600) 100%);
+  color: #fff;
+}
+.hero .lead { color: rgba(255, 255, 255, 0.88); max-width: 40rem; }
+.hero-badge {
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-weight: 500;
+  padding: 0.5rem 0.9rem;
+}
+.bagian-abu { background: var(--adu-abu-100); }
+
+.ikon-bulat {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--adu-biru-50);
+  color: var(--adu-biru-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.ikon-sukses { background: #dcfce7; color: #15803d; font-size: 2rem; width: 4.5rem; height: 4.5rem; }
+
+/* Kartu */
+.card-adu {
+  border: 1px solid var(--adu-abu-200);
+  border-radius: 0.9rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+}
+
+/* Nomor laporan */
+.kotak-nomor {
+  background: var(--adu-biru-50);
+  border: 1px dashed var(--adu-biru-600);
+  border-radius: 0.9rem;
+  padding: 1.25rem;
+}
+.nomor-laporan {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: clamp(1.3rem, 5vw, 1.9rem);
+  font-weight: 700;
+  color: var(--adu-biru-800);
+  letter-spacing: 0.03em;
+  word-break: break-all;
+}
+
+/* Kartu statistik dashboard */
+.stat-card { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(15, 23, 42, 0.09); }
+.stat-ikon {
+  width: 3.2rem;
+  height: 3.2rem;
+  flex: none;
+  border-radius: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.stat-angka { font-size: 1.9rem; font-weight: 700; line-height: 1.1; color: var(--adu-abu-800); }
+.stat-label { font-size: 0.85rem; color: var(--adu-abu-500); font-weight: 500; }
+.stat-biru .stat-ikon   { background: var(--adu-biru-100); color: var(--adu-biru-700); }
+.stat-kuning .stat-ikon { background: #fef3c7; color: #b45309; }
+.stat-langit .stat-ikon { background: #e0f2fe; color: #0369a1; }
+.stat-hijau .stat-ikon  { background: #dcfce7; color: #15803d; }
+
+/* Tabel */
+.table-adu { --bs-table-hover-bg: var(--adu-biru-50); }
+.table-adu thead th {
+  background: var(--adu-abu-100);
+  color: var(--adu-abu-500);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  border-bottom: 1px solid var(--adu-abu-200);
+  white-space: nowrap;
+  padding: 0.8rem 1rem;
+}
+.table-adu td { padding: 0.8rem 1rem; }
+.sel-judul { min-width: 14rem; }
+
+/* Lencana status */
+.badge-status { font-weight: 600; padding: 0.4em 0.75em; border-radius: 999px; }
+.badge-menunggu { background: #fef3c7; color: #92400e; }
+.badge-diproses { background: #dbeafe; color: #1e40af; }
+.badge-selesai  { background: #dcfce7; color: #166534; }
+
+/* Isi deskripsi laporan: baris baru dari pelapor tetap terlihat */
+.isi-deskripsi {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: var(--adu-abu-50);
+  border: 1px solid var(--adu-abu-200);
+  border-radius: 0.6rem;
+  padding: 1rem;
+  margin-top: 0.4rem;
+}
+
+/* Layar kecil (ponsel) */
+@media (max-width: 575.98px) {
+  .stat-angka { font-size: 1.5rem; }
+  .stat-ikon { width: 2.6rem; height: 2.6rem; font-size: 1.2rem; }
+  .hero h1 { font-size: 2rem; }
+}

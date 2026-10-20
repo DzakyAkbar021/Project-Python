@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Daftar Laporan{% endblock %}
+
+{% block content %}
+<section class="container py-4 py-md-5">
+  <div class="mb-4">
+    <h1 class="h2 fw-bold mb-1">Semua Laporan</h1>
+    <p class="text-muted mb-0">Cari, saring, dan kelola laporan yang masuk.</p>
+  </div>
+
+  {# Form pencarian dan filter (memakai GET agar alamatnya bisa disalin) #}
+  <div class="card card-adu mb-3">
+    <div class="card-body">
+      <form method="get" action="{{ url_for('admin.daftar_laporan') }}" class="row g-2 align-items-end">
+        <div class="col-12 col-lg-5">
+          <label for="q" class="form-label small fw-semibold mb-1">Cari judul atau nomor laporan</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+            <input type="search" class="form-control" id="q" name="q" value="{{ q }}"
+                   maxlength="100" placeholder="Contoh: AC rusak atau ADU-2026">
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <label for="kategori" class="form-label small fw-semibold mb-1">Kategori</label>
+          <select class="form-select" id="kategori" name="kategori">
+            <option value="">Semua</option>
+            {% for k in daftar_kategori %}
+              <option value="{{ k }}" {% if kategori == k %}selected{% endif %}>{{ k }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-6 col-lg-2">
+          <label for="status" class="form-label small fw-semibold mb-1">Status</label>
+          <select class="form-select" id="status" name="status">
+            <option value="">Semua</option>
+            {% for s in daftar_status %}
+              <option value="{{ s }}" {% if status == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-12 col-lg-3 d-flex gap-2">
+          <button type="submit" class="btn btn-primary flex-grow-1"><i class="bi bi-funnel me-1"></i>Terapkan</button>
+          {% if q or kategori or status %}
+            <a href="{{ url_for('admin.daftar_laporan') }}" class="btn btn-outline-secondary">Reset</a>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card card-adu">
+    <div class="card-header bg-white py-3">
+      <span class="fw-semibold">{{ total }} laporan ditemukan</span>
+      {% if total_halaman > 1 %}
+        <span class="text-muted small ms-2">(halaman {{ halaman }} dari {{ total_halaman }})</span>
+      {% endif %}
+    </div>
+    <div class="card-body p-0">
+      {% include "admin/_tabel_laporan.html" %}
+    </div>
+
+    {% if total_halaman > 1 %}
+    <div class="card-footer bg-white py-3">
+      <nav aria-label="Navigasi halaman">
+        <ul class="pagination pagination-sm justify-content-center mb-0">
+          <li class="page-item {% if halaman <= 1 %}disabled{% endif %}">
+            <a class="page-link" href="{{ url_for('admin.daftar_laporan', q=q or None, kategori=kategori or None, status=status or None, halaman=halaman - 1) }}">&laquo;</a>
+          </li>
+          {% for n in range([1, halaman - 2]|max, [total_halaman, halaman + 2]|min + 1) %}
+            <li class="page-item {% if n == halaman %}active{% endif %}">
+              <a class="page-link" href="{{ url_for('admin.daftar_laporan', q=q or None, kategori=kategori or None, status=status or None, halaman=n) }}">{{ n }}</a>
+            </li>
+          {% endfor %}
+          <li class="page-item {% if halaman >= total_halaman %}disabled{% endif %}">
+            <a class="page-link" href="{{ url_for('admin.daftar_laporan', q=q or None, kategori=kategori or None, status=status or None, halaman=halaman + 1) }}">&raquo;</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% include "admin/_modal_hapus.html" %}
+{% endblock %}

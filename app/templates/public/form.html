@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Kirim Laporan{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-7">
+      <div class="mb-4">
+        <h1 class="h2 fw-bold">Form Pengaduan &amp; Saran</h1>
+        <p class="text-muted mb-0">Semua kolom wajib diisi. Laporan hanya dapat dilihat oleh admin sekolah.</p>
+      </div>
+
+      <div class="card card-adu">
+        <div class="card-body p-4 p-md-5">
+          <form method="post" action="{{ url_for('public.form_laporan') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            {# Jenis laporan #}
+            <div class="mb-4">
+              <label class="form-label fw-semibold d-block">Jenis laporan <span class="text-danger">*</span></label>
+              <div class="btn-group" role="group" aria-label="Jenis laporan">
+                {% for j in daftar_jenis %}
+                  <input type="radio" class="btn-check" name="jenis" id="jenis_{{ loop.index }}"
+                         value="{{ j }}" {% if nilai.jenis == j %}checked{% endif %} required>
+                  <label class="btn btn-outline-primary px-4" for="jenis_{{ loop.index }}">{{ j }}</label>
+                {% endfor %}
+              </div>
+              {% if errors.jenis %}<div class="text-danger small mt-1">{{ errors.jenis }}</div>{% endif %}
+            </div>
+
+            {# Nama pelapor #}
+            <div class="mb-4">
+              <label for="nama_pelapor" class="form-label fw-semibold">Nama pelapor <span class="text-danger">*</span></label>
+              <input type="text" class="form-control {% if errors.nama_pelapor %}is-invalid{% endif %}"
+                     id="nama_pelapor" name="nama_pelapor" value="{{ nilai.nama_pelapor }}"
+                     maxlength="100" placeholder="Contoh: Budi Santoso (XI RPL 1)" required>
+              {% if errors.nama_pelapor %}<div class="invalid-feedback">{{ errors.nama_pelapor }}</div>{% endif %}
+            </div>
+
+            {# Kategori #}
+            <div class="mb-4">
+              <label for="kategori" class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
+              <select class="form-select {% if errors.kategori %}is-invalid{% endif %}"
+                      id="kategori" name="kategori" required>
+                <option value="" {% if not nilai.kategori %}selected{% endif %} disabled>-- Pilih kategori --</option>
+                {% for k in daftar_kategori %}
+                  <option value="{{ k }}" {% if nilai.kategori == k %}selected{% endif %}>{{ k }}</option>
+                {% endfor %}
+              </select>
+              {% if errors.kategori %}<div class="invalid-feedback">{{ errors.kategori }}</div>{% endif %}
+            </div>
+
+            {# Judul #}
+            <div class="mb-4">
+              <label for="judul" class="form-label fw-semibold">Judul laporan <span class="text-danger">*</span></label>
+              <input type="text" class="form-control {% if errors.judul %}is-invalid{% endif %}"
+                     id="judul" name="judul" value="{{ nilai.judul }}" maxlength="150"
+                     placeholder="Ringkas dalam satu kalimat" required>
+              {% if errors.judul %}
+                <div class="invalid-feedback">{{ errors.judul }}</div>
+              {% else %}
+                <div class="form-text text-end" data-counter-for="judul" data-max="150">0/150</div>
+              {% endif %}
+            </div>
+
+            {# Deskripsi #}
+            <div class="mb-4">
+              <label for="deskripsi" class="form-label fw-semibold">Deskripsi <span class="text-danger">*</span></label>
+              <textarea class="form-control {% if errors.deskripsi %}is-invalid{% endif %}"
+                        id="deskripsi" name="deskripsi" rows="6" maxlength="2000"
+                        placeholder="Jelaskan kejadian atau saran Anda: apa, di mana, dan kapan." required>{{ nilai.deskripsi }}</textarea>
+              {% if errors.deskripsi %}
+                <div class="invalid-feedback">{{ errors.deskripsi }}</div>
+              {% else %}
+                <div class="form-text text-end" data-counter-for="deskripsi" data-max="2000">0/2000</div>
+              {% endif %}
+            </div>
+
+            <div class="d-grid d-sm-flex justify-content-sm-end gap-2">
+              <a href="{{ url_for('public.beranda') }}" class="btn btn-outline-secondary">Batal</a>
+              <button type="submit" class="btn btn-primary px-4">
+                <i class="bi bi-send me-2"></i>Kirim Laporan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

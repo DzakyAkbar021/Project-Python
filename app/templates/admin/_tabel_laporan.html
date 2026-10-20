@@ -1,0 +1,54 @@
+{# Tabel laporan yang dipakai di dashboard dan halaman daftar laporan.
+   Variabel yang dibutuhkan: daftar #}
+{% from "_macros.html" import badge_status %}
+
+{% if daftar %}
+<div class="table-responsive">
+  <table class="table table-adu table-hover align-middle mb-0">
+    <thead>
+      <tr>
+        <th>No. Laporan</th>
+        <th>Tanggal</th>
+        <th>Pelapor</th>
+        <th>Kategori</th>
+        <th>Judul</th>
+        <th>Status</th>
+        <th class="text-end">Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for l in daftar %}
+      <tr>
+        <td class="text-nowrap">
+          <a class="fw-semibold text-decoration-none" href="{{ url_for('admin.detail_laporan', laporan_id=l.id) }}">{{ l.nomor_laporan }}</a>
+        </td>
+        <td class="text-nowrap text-muted small">{{ l.dibuat_pada|tanggal }}</td>
+        <td>{{ l.nama_pelapor }}</td>
+        <td><span class="badge text-bg-light border fw-medium">{{ l.kategori }}</span></td>
+        <td class="sel-judul">
+          {{ l.judul|truncate(60) }}
+          {% if l.jenis == 'Saran' %}<span class="badge text-bg-primary-subtle ms-1">Saran</span>{% endif %}
+        </td>
+        <td>{{ badge_status(l.status) }}</td>
+        <td class="text-end text-nowrap">
+          <a class="btn btn-sm btn-outline-primary" href="{{ url_for('admin.detail_laporan', laporan_id=l.id) }}" title="Lihat detail">
+            <i class="bi bi-eye"></i>
+          </a>
+          <button type="button" class="btn btn-sm btn-outline-danger" title="Hapus"
+                  data-bs-toggle="modal" data-bs-target="#modalHapus"
+                  data-action="{{ url_for('admin.hapus_laporan', laporan_id=l.id) }}"
+                  data-nomor="{{ l.nomor_laporan }}" data-judul="{{ l.judul }}">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="text-center text-muted py-5">
+  <i class="bi bi-inbox display-4 d-block mb-2"></i>
+  Belum ada laporan yang sesuai.
+</div>
+{% endif %}
